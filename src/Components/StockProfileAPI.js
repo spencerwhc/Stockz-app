@@ -3,7 +3,7 @@ const API_KEY = "9fd7a30ee7bb8f392596d329572b28eb";
 
 async function getStocksProfile() {
   const url =
-    "https://financialmodelingprep.com/api/v3/stock/list?apikey=" + API_KEY;
+    "https://financialmodelingprep.com/api/v3/stock-screener?&apikey=9fd7a30ee7bb8f392596d329572b28eb";
   let res = await fetch(url);
   let stocks = await res.json();
   return stocks;
