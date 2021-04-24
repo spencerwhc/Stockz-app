@@ -1,16 +1,9 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom"; // add this one
 import { useStockProfile } from "./StockProfileAPI"; // import from a local file
-
-function StockTable(props) {
-  return (
-    <div className="stockTable">
-      <button>Symbol: {props.symbol}</button>
-      <p>Name:{props.name}</p>
-      <p>Sector: {props.sector}</p>
-    </div>
-  );
-}
+import { AgGridColumn, AgGridReact } from "ag-grid-react";
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-balham-dark.css";
 
 export default function Stocks(props) {
   const { loading, stocksProfile, error } = useStockProfile();
@@ -21,17 +14,24 @@ export default function Stocks(props) {
   if (error) {
     return <p>Something went wrong: {error.message}</p>;
   }
+
   return (
     <div className="Stock">
       <h2>Stocks List</h2>
-      {stocksProfile.map((stock) => (
-        <StockTable
-          symbol={stock.symbol}
-          name={stock.companyName}
-          sector={stock.sector}
-          key={stock.symbol}
-        />
-      ))}
+      <div
+        className="ag-theme-balham-dark"
+        style={{ height: 1000, width: 600 }}
+      >
+        <AgGridReact
+          rowData={stocksProfile}
+          pagination={true}
+          paginationPageSize={30}
+        >
+          <AgGridColumn field="symbol" headerName="Stock"></AgGridColumn>
+          <AgGridColumn field="companyName"></AgGridColumn>
+          <AgGridColumn field="sector"></AgGridColumn>
+        </AgGridReact>
+      </div>
     </div>
   );
 }

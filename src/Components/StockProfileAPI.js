@@ -15,6 +15,7 @@ export function useStockProfile() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    console.log("inside use effect");
     const fetchStocks = async () => {
       setLoading(true);
       try {
