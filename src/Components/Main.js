@@ -15,7 +15,7 @@ export default function Main() {
         <Route path="/quote">
           <Quote />
         </Route>
-        <Route path="/price">
+        <Route path="/price/:symbol?">
           <Price />
         </Route>
         <Route exact path="/">

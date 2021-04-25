@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
+
 import usePriceHistroy from "./PriceHistroyAPI";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham-dark.css";
+import { useLocation, useParams } from "react-router";
 
 export default function Price() {
-  const { loading, PriceHistroy, error } = usePriceHistroy();
+  const { symbol } = useParams();
+  const { loading, PriceHistroy, error } = usePriceHistroy(symbol);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -22,11 +25,7 @@ export default function Price() {
         className="ag-theme-balham-dark"
         style={{ height: 1000, width: 1300 }}
       >
-        <AgGridReact
-          rowData={PriceHistroy}
-          pagination={true}
-          paginationPageSize={30}
-        >
+        <AgGridReact rowData={PriceHistroy}>
           <AgGridColumn field="date" headerName="Date"></AgGridColumn>
           <AgGridColumn field="open"></AgGridColumn>
           <AgGridColumn field="high"></AgGridColumn>
