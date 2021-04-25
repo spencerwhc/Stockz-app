@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+
 import { useStockProfile } from "./StockProfileAPI"; // import from a local file
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 
@@ -17,7 +17,7 @@ export default function Stocks() {
       stock.symbol.toUpperCase().includes(search.toUpperCase())
     );
     setFilteredStocks(filteredResult);
-  }, [search]);
+  }, [search, stocksProfile]);
 
   if (loading) {
     return <p>Loading...</p>;

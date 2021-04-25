@@ -1,6 +1,6 @@
 function SearchBar(props) {
   return (
-    <div>
+    <div className="searchBar">
       <input
         aria-labelledby="search-button"
         name="search"
