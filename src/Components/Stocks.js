@@ -1,12 +1,23 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom"; // add this one
+import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { useStockProfile } from "./StockProfileAPI"; // import from a local file
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
+
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham-dark.css";
+import SearchBar from "./SearchBar";
 
-export default function Stocks(props) {
+export default function Stocks() {
   const { loading, stocksProfile, error } = useStockProfile();
+  const [search, setSearch] = useState("");
+  const [filteredStocks, setFilteredStocks] = useState([]);
+
+  useEffect(() => {
+    const filteredResult = stocksProfile.filter((stock) =>
+      stock.symbol.toUpperCase().includes(search.toUpperCase())
+    );
+    setFilteredStocks(filteredResult);
+  }, [search]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -18,12 +29,13 @@ export default function Stocks(props) {
   return (
     <div className="Stock">
       <h2>Stocks List</h2>
+      <SearchBar onChange={setSearch} value={search} />
       <div
         className="ag-theme-balham-dark"
         style={{ height: 1000, width: 600 }}
       >
         <AgGridReact
-          rowData={stocksProfile}
+          rowData={filteredStocks}
           pagination={true}
           paginationPageSize={30}
         >
