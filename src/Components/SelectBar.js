@@ -1,9 +1,6 @@
 import React from "react";
 
 export default function SelectBar(props) {
-  //   const industryList = new Set()
-
-  //   setIndustryList(() => industryList = props.map( (stock) => stock.sector));
   return (
     <div className="SelectBar">
       <select
@@ -15,11 +12,11 @@ export default function SelectBar(props) {
         <option value={""}>--ANY--</option>
         {props.sectors &&
           props.sectors.map((sector) => (
-            <option value={sector}>{sector}</option>
+            <option value={sector} key={sector}>
+              {sector}
+            </option>
           ))}
       </select>
     </div>
   );
-
-  return;
 }

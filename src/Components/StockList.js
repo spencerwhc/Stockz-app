@@ -45,14 +45,14 @@ export default function StockList() {
       <div>
         <div className="row">
           <div className="col">
-            <lable>Search by Stock</lable>
+            <label>Search by Stock</label>
             <SearchBar
               onChange={setSelectedStock}
               value={selectedStock.toUpperCase()}
             />
           </div>
           <div className="col">
-            <lable>Search by Sector</lable>
+            <label>Search by Sector</label>
             <SelectBar
               onChange={(sector) => {
                 setSelectedSector(sector);
@@ -75,7 +75,7 @@ export default function StockList() {
             headerName="Stock"
             onCellClicked={(event) => history.push(`/price/${event.value}`)}
           ></AgGridColumn>
-          <AgGridColumn field="companyName" width="400px"></AgGridColumn>
+          <AgGridColumn field="companyName" width="400"></AgGridColumn>
           <AgGridColumn field="sector"></AgGridColumn>
           <AgGridColumn
             field="price"

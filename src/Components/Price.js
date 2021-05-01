@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 
 import usePriceHistroy from "./PriceHistroyAPI";

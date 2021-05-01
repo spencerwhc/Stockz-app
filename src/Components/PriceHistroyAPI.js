@@ -28,7 +28,7 @@ function usePriceHistroy(symbol) {
     };
 
     fetchPriceHistory();
-  }, []);
+  }, [symbol]);
 
   return {
     loading,
