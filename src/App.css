@@ -29,7 +29,7 @@
 }
 
 .main {
-  height: 100vh;
+  /* height: 100vh; */
   background-color: #393e46;
   margin-left: 200px; /* Same as the width of the sidebar */
   padding: 0px 10px;

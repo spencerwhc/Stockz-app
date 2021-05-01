@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 const API_KEY = "9fd7a30ee7bb8f392596d329572b28eb";
 
 async function getPriceHistory(symbol) {
-  const url = `https://financialmodelingprep.com/api/v3/historical-price-full/${symbol}?timeseries=100&apikey=9fd7a30ee7bb8f392596d329572b28eb`;
+  const url = `https://financialmodelingprep.com/api/v3/historical-price-full/${symbol}?timeseries=100&apikey=${API_KEY}`;
 
   let res = await fetch(url);
   let price = await res.json();

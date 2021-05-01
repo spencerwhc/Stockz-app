@@ -3,7 +3,6 @@ function SearchBar(props) {
     <div className="searchBar">
       <input
         aria-labelledby="search-button"
-        placeholder="Search by stock"
         name="search"
         id="search"
         type="search"

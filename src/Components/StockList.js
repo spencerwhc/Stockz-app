@@ -6,22 +6,30 @@ import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham-dark.css";
 import SearchBar from "./SearchBar";
-import Price from "./Price";
+import SelectBar from "./SelectBar";
 
 export default function StockList() {
   const { loading, stocksProfile, error } = useStockProfile();
-  const [search, setSearch] = useState("");
-  const [filteredStocks, setFilteredStocks] = useState([]);
   const [selectedStock, setSelectedStock] = useState("");
-
+  const [selectedSector, setSelectedSector] = useState("");
+  const [filteredStocks, setFilteredStocks] = useState([]);
   let history = useHistory();
 
   useEffect(() => {
-    const filteredResult = stocksProfile.filter((stock) =>
-      stock.symbol.toUpperCase().includes(search.toUpperCase())
+    let filteredResult = [];
+
+    filteredResult = stocksProfile.filter((stock) =>
+      stock.symbol.toUpperCase().includes(selectedStock.toUpperCase())
     );
+
+    if (selectedSector) {
+      filteredResult = filteredResult.filter(
+        (stock) => stock.sector === selectedSector
+      );
+      console.log(filteredResult, "filteredresults");
+    }
     setFilteredStocks(filteredResult);
-  }, [search, stocksProfile]);
+  }, [selectedStock, stocksProfile, selectedSector]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -30,18 +38,37 @@ export default function StockList() {
     return <p>Something went wrong: {error.message}</p>;
   }
 
+  const sectors = ["Technology", "Consumer Services"];
   return (
-    <div className="StockList">
-      <div
-        className="ag-theme-balham-dark"
-        style={{ height: 1000, width: 800 }}
-      >
-        <h2>Stocks List</h2>
-        <SearchBar onChange={setSearch} value={search} />
+    <div className="container">
+      <h2>Stocks List</h2>
+      <div>
+        <div className="row">
+          <div className="col">
+            <lable>Search by Stock</lable>
+            <SearchBar
+              onChange={setSelectedStock}
+              value={selectedStock.toUpperCase()}
+            />
+          </div>
+          <div className="col">
+            <lable>Search by Sector</lable>
+            <SelectBar
+              onChange={(sector) => {
+                setSelectedSector(sector);
+              }}
+              sectors={sectors}
+              value={selectedSector}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="ag-theme-balham-dark">
         <AgGridReact
           rowData={filteredStocks}
           pagination={true}
           paginationPageSize={30}
+          domLayout="autoHeight"
         >
           <AgGridColumn
             field="symbol"
@@ -50,6 +77,16 @@ export default function StockList() {
           ></AgGridColumn>
           <AgGridColumn field="companyName" width="400px"></AgGridColumn>
           <AgGridColumn field="sector"></AgGridColumn>
+          <AgGridColumn
+            field="price"
+            filter="agNumberColumnFilter"
+            sortable="true"
+          ></AgGridColumn>
+          <AgGridColumn
+            field="volume"
+            filter="agNumberColumnFilter"
+            sortable="true"
+          ></AgGridColumn>
         </AgGridReact>
       </div>
     </div>
